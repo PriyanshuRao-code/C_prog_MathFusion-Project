@@ -8,7 +8,7 @@ void Arithmetic_explain(){
     printf("Multiplication: a*b\n");
     printf("Division: a/b\n");
     printf("Power: a^b\n");
-    printf("Root of the function can be calculated as: a ^ 0.5\n");
+    printf("Root of the function can be calculated as: a ^ 0.5\n\n");
     Arithmetic(); 
 }
 void Arithmetic(){
@@ -17,11 +17,6 @@ void Arithmetic(){
     printf("Enter the arithmetic operation:");
     scanf("%f%c%f",&a,&c,&b);
     while(getchar()!='\n');
-    if (c==' ') {
-        printf("Don't use spaces in between calculations\n");
-        Arithmetic();
-        return;
-    }
     switch(c){
         case '+':
             printf("%f",a + b);
@@ -44,13 +39,12 @@ void Arithmetic(){
             }
             break;
         case ' ':
-            printf("Don't use spaces in between for calculation\n");
+            printf("\nDon't use spaces in between for calculation\n");
             Arithmetic();
             break;
         default:
-            printf("Please refer to the functions:\n");
+            printf("\nPlease refer to the functions:\n");
             Arithmetic_explain();
             break;
     }
-    
 }
