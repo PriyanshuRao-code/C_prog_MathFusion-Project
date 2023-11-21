@@ -16,12 +16,11 @@ void Arithmetic(){
     char c='A';
     printf("Enter the arithmetic operation:");
     scanf("%f%c%f",&a,&c,&b);
+    while(getchar()!='\n');
     if (c==' ') {
         printf("Don't use spaces in between calculations\n");
-        //printf("Enter the arithmetic operation:");
-        while(getchar()!='\n');
         Arithmetic();
-        //scanf("%f%c%f",&a,&c,&b);
+        return;
     }
     switch(c){
         case '+':
