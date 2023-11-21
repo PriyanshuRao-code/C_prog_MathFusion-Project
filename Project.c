@@ -5,17 +5,19 @@
 #include "Co_ordination.h"
 int main(){
   int n,m;
-printf("hello world");
   printf("Welcome to the world of calculation\n\n");
   printf("Which type of calculations would you like to perform:\n");
   printf("1. Arithmetic operations\n
           2. Complex number operations\n
           3. Matrix operations\n
-          4. Co-ordination operations\n);
+          4. Co-ordination operations\n");
   scanf("%d",&n);
   printf("1. Proceed\n
           2. Explain operations\n");
   scanf("%d",&m);
+
+
+  //Just Executing the the above by sending the calculation to respective functions in their respective header files
   if(n==1){
     if(m==1){
       Arithmetic();
