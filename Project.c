@@ -78,10 +78,10 @@ int main(){
     case 3:
       switch(m){
         case 1:
-          //Matrix();
+          Matrix();
           break;
         case 2:
-          //Matrix_explain();
+          Matrix_explain();
           break;
         //No default needed covered earlier.
       }
