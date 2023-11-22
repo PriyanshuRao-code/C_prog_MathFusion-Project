@@ -1,14 +1,16 @@
 #include <stdio.h>
 void Matrix_explain();
 void Matrix();
-void Matrix_init();
-void Matrix_input();
-void Matrix_display();
+void Matrix_init();//For 2D matrix
+void Matrix_input();//For 2D matrix
+void Matrix_input3();//For 3D matrix
+void Matrix_display();//For 2D matrix
 void Addition();
 void Subtraction();
 void Multiplication();
-/*void Determinant();
-void Inverse();
+void Determinant();
+int deter();
+/*void Inverse();
 void Transpose();*/
 
 
@@ -41,7 +43,7 @@ void Matrix(){
             Multiplication();
             break;
         case '|':
-            //Determinant();
+            Determinant();
             break;
         case '~':
             //Inverse();
@@ -62,7 +64,15 @@ void Matrix_init(int r,int c,int matrix[][c]){
         }
     }
 }
-void Matrix_input(int n,int r,int c,int matrix[][r][c]){
+void Matrix_input(int r,int c,int matrix[][c]){
+        printf("Enter the matrix \n");
+        for(int i=0;i<r;i++){
+            for(int j=0;j<c;j++){
+                scanf("%d",&matrix[i][j]);
+            }
+        }
+}
+void Matrix_input3(int n,int r,int c,int matrix[][r][c]){
     for(int i=0;i<n;i++){
         printf("Enter the matrix \n");
         for(int j=0;j<r;j++){
@@ -91,7 +101,7 @@ void Addition(){
     printf("Enter the number of rows and columns\n");
     scanf("%d %d",&r,&c);
     int matrix[n][r][c];
-    Matrix_input(n,r,c,matrix);
+    Matrix_input3(n,r,c,matrix);
     int Ans_matrix[r][c];
     Matrix_init(r,c,Ans_matrix);
 
@@ -116,7 +126,7 @@ void Subtraction(){
     printf("Enter the number of rows and columns\n");
     scanf("%d %d",&r,&c);
     int matrix[n][r][c];
-    Matrix_input(n,r,c,matrix);
+    Matrix_input3(n,r,c,matrix);
     int Ans_matrix[r][c];
     Matrix_init(r,c,Ans_matrix);
 
@@ -144,10 +154,10 @@ void Multiplication(){
         printf("Matrix multiplication is not possible\n");
         return;
     }
-    int matrix1[1][r1][c1];
-    int matrix2[1][r2][c2];
-    Matrix_input(1,r1,c1,matrix1);
-    Matrix_input(1,r2,c2,matrix2);
+    int matrix1[r1][c1];
+    int matrix2[r2][c2];
+    Matrix_input(r1,c1,matrix1);
+    Matrix_input(r2,c2,matrix2);
     int matrix[r1][c2];
     Matrix_init(r1,c2,matrix);
 
@@ -155,10 +165,60 @@ void Multiplication(){
     for(int i=0;i<r1;i++){
         for(int j=0;j<c2;j++){
             for(int k=0;k<r2;k++){
-                matrix[i][j]+=matrix1[0][i][k]*matrix2[0][k][j];
+                matrix[i][j]+=matrix1[i][k]*matrix2[k][j];
             }
         }
     }
     printf("Matrix after multiplication\n");
     Matrix_display(r1,c2,matrix);
+}
+void Determinant(){
+    int n;
+    printf("Enter the row/column [Square matrix] for the matrix:");
+    scanf("%d",&n);
+    if(n>10) {
+        printf("Enter value of n less than 11");
+        Determinant();
+        return;
+    }
+    int matrix[10][10];
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            scanf("%d",&matrix[i][j]);
+        }
+    }
+//Matrix_input(n,n,matrix);->can use this as it will create a matrix of nxn and we want 10x10. Why? Refer to deter()
+
+    int det=deter(n,matrix);
+    printf("Determinant of the matrix is %d",det);
+}
+//Finding determinant using recursion
+int deter(int n,int matrix[10][10]) {
+    int det = 0;
+    int submatrix[10][10]; //Should be constant at compilation time or use pointer BUT don't use submatrix[n][n];
+    Matrix_init(10,10,submatrix); 
+    if (n == 1) {
+        return matrix[0][0];
+    }
+    else if (n == 2) {
+        return ((matrix[0][0] * matrix[1][1]) - (matrix[0][1] * matrix[1][0]));
+    }
+    //Making a submatrix of (n-1)x(n-1) and then taking it to 2x2 or 1x1 for finding determinant
+     else {
+        for (int x = 0; x < n; x++) { 
+            int subi = 0; // Index for submatrix row
+            for (int i = 1; i < n; i++) { 
+                int subj = 0; // Index for submatrix column
+                for (int j = 0; j < n; j++) {
+                    if (j == x) 
+                        continue;
+                    submatrix[subi][subj] = matrix[i][j];
+                    subj++;
+                }
+                subi++;
+            }
+            det += (x % 2 == 0 ? 1 : -1) * matrix[0][x] * deter(n-1,submatrix);
+        }
+    }
+    return det;
 }
