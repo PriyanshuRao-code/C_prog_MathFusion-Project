@@ -1,4 +1,5 @@
 #include <stdio.h>
+#define MAX 10
 void Matrix_explain();
 void Matrix();
 void Matrix_init();//For 2D matrix
@@ -11,8 +12,9 @@ void Multiplication();
 void Determinant();
 int deter();
 void Add_Sub();
-/*void Inverse();
-void Transpose();*/
+void Inverse();
+void Transp();
+void Transpose();
 
 
 void Matrix_explain(){
@@ -24,9 +26,6 @@ void Matrix_explain(){
     printf("Determinant: |\n");
     printf("Inverse: ~\n");
     printf("Transpose: !\n");
-
-    // printf("+ - * will be performed between two matrices only\n");
-    //printf("| ~ ! will be performed for 1 matrix only\n");
     Matrix();
 }
 void Matrix(){
@@ -48,10 +47,10 @@ void Matrix(){
             Determinant();
             break;
         case '~':
-            //Inverse();
+            Inverse();
             break;
         case '!':
-            //Transpose();
+            Transpose();
             break;
         case '#':
             Add_Sub();
@@ -125,7 +124,7 @@ void Subtraction(){
     printf("Operation performed will be A-B-C-D...\n");
     //Taking inputs
     int n;
-    printf("Enter the number of matrices to be added:");
+    printf("Enter the number of matrices to be operated:");
     scanf("%d",&n);
     int r,c;
     printf("Enter the number of rows and columns\n");
@@ -139,8 +138,8 @@ void Subtraction(){
     for(int i=0;i<n;i++){
         for(int j=0;j<r;j++){
             for(int k=0;k<c;k++){
-                int p= i==0?1:-1;//Important step for subtraction
-                Ans_matrix[j][k]=Ans_matrix[j][k]+ p*matrix[i][j][k];
+                int sign= i==0?1:-1;//Important step for subtraction
+                Ans_matrix[j][k]=Ans_matrix[j][k]+ sign*matrix[i][j][k];
             }
         }
     }
@@ -186,7 +185,8 @@ void Determinant(){
         Determinant();
         return;
     }
-    int matrix[10][10];
+    int matrix[MAX][MAX];
+    printf("Enter the value of matrix\n");
     for(int i=0;i<n;i++){
         for(int j=0;j<n;j++){
             scanf("%d",&matrix[i][j]);
@@ -197,11 +197,12 @@ void Determinant(){
     int det=deter(n,matrix);
     printf("Determinant of the matrix is %d",det);
 }
+
 //Finding determinant using recursion
-int deter(int n,int matrix[10][10]) {
+int deter(int n,int matrix[MAX][MAX]) {
     int det = 0;
-    int submatrix[10][10]; //Should be constant at compilation time or use pointer BUT don't use submatrix[n][n];
-    Matrix_init(10,10,submatrix); 
+    int submatrix[MAX][MAX]; //Should be constant at compilation time or use pointer BUT don't use submatrix[n][n];
+    Matrix_init(MAX,MAX,submatrix); 
     if (n == 1) {
         return matrix[0][0];
     }
@@ -242,6 +243,8 @@ void Add_Sub(){
     printf("Enter the operations as A+B-C+D or 1+2-3+4 [Without using spaces][Without changing order of order]\n");
     scanf("%s",ch);
     while(getchar()!='\n');
+
+    //Checking for validity of operations
     for(int i=0;i<(n-1);i++){
         if(ch[2*i+1]!='+' && ch[2*i+1]!='-'){
             printf("\nInvalid operation\n");
@@ -252,15 +255,91 @@ void Add_Sub(){
     for(int i=0;i<n;i++){
         for(int j=0;j<r;j++){
             for(int k=0;k<c;k++){
-                int p;
-                if(i==0) p=1;
+                int sign;
+                if(i==0) sign=1;
                 else{
-                    p= ch[2*i-1]=='+'?1:-1;
+                    sign= ch[2*i-1]=='+'?1:-1;//Critical point of whole Add_Sub() function
                 }
-                Ans_matrix[j][k]=Ans_matrix[j][k]+ p*matrix[i][j][k];
+                Ans_matrix[j][k]=Ans_matrix[j][k]+ sign*matrix[i][j][k];
             }
         }
     }
     printf("Matrix after operations\n");
     Matrix_display(r,c,Ans_matrix);
+}
+void Transp(int r,int c,int matrix[][c],int transposee[][r]){
+    Matrix_init(r,c,transposee);
+    //Transpose stored in another matrix
+    for (int i=0;i<r;i++){
+        for(int j=0;j<c;j++){
+            transposee[j][i]=matrix[i][j];       
+        }
+    }
+}
+void Transpose(){
+    //Input
+    int r,c;
+    printf("Enter the number of rows and columns for calculating transpose matrix: ");
+    scanf("%d %d",&r,&c);
+    int matrix[r][c];
+    Matrix_input(r,c,matrix);
+
+    //Transpose
+    int transposee[c][r];
+    Matrix_init(c,r,transposee);
+    Transp(r,c,matrix,transposee);
+    printf("Transpose matrix:\n");
+    Matrix_display(c,r,transposee);
+}
+void Inverse(){
+    int n;
+    printf("Enter the rows/columns [Square matrix] for calculating inverse matrix: ");
+    scanf("%d",&n);
+    int matrix[MAX][MAX];
+    printf("Enter the values of matrix\n");
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            scanf("%d",&matrix[i][j]);
+        }
+    }
+    int det=deter(n,matrix);
+    if (det==0) {
+        printf("Inverse of matrix is not possible as determinant is 0");
+        return;
+    }
+
+    //Cofactor Calculation
+    int cofactor[MAX][MAX];
+    int submatrix[MAX][MAX];
+    for (int x = 0; x < n; x++) { 
+        for(int y=0;y<n;y++){
+            int subi = 0; // Index for submatrix row
+            for (int i = 0; i < n; i++) {
+                    if(i==x) 
+                        continue; 
+                int subj = 0; // Index for submatrix column
+                for (int j = 0; j < n; j++) {
+                    if (j == y) 
+                        continue;
+                    submatrix[subi][subj] = matrix[i][j];
+                    subj++;
+                }
+                subi++;
+            }
+            int sign = (x+y)%2==0?1:-1;
+            cofactor[x][y]= sign*deter(n-1,submatrix);
+        }
+    }
+    //Adjoint Calculation
+    int adjoint[MAX][MAX];
+    Transp(MAX,MAX,cofactor,adjoint);
+
+    //Printing inverse matrix[Can also store the values in float inverse[n][n] ]
+    printf("Inverse matrix:\n");
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            printf("%.2f\t",(float)adjoint[i][j]/det);
+        }
+        printf("\n");
+    }
 }
