@@ -10,6 +10,7 @@ void Subtraction();
 void Multiplication();
 void Determinant();
 int deter();
+void Add_Sub();
 /*void Inverse();
 void Transpose();*/
 
@@ -18,6 +19,7 @@ void Matrix_explain(){
     printf("Here are the functions allowed here and the format is as:\n");
     printf("Addition: +\n");
     printf("Subtraction: -\n");
+    printf("Add_Sub as A+B-C-D.. : #\n");
     printf("Multiplication: *\n");
     printf("Determinant: |\n");
     printf("Inverse: ~\n");
@@ -50,6 +52,9 @@ void Matrix(){
             break;
         case '!':
             //Transpose();
+            break;
+        case '#':
+            Add_Sub();
             break;
         default:
             printf("\nPlease refer to the functions:\n");
@@ -221,4 +226,41 @@ int deter(int n,int matrix[10][10]) {
         }
     }
     return det;
+}
+void Add_Sub(){
+    printf("Both add and subtract randomly\n");
+    int n,r,c;
+    printf("Enter the total number of matrices: ");
+    scanf("%d",&n);
+    printf("Enter rows and columns of matrix: ");
+    scanf("%d %d",&r,&c);
+    int matrix[n][r][c];
+    Matrix_input3(n,r,c,matrix);
+    int Ans_matrix[r][c];
+    Matrix_init(r,c,Ans_matrix);
+    char ch[2*n];
+    printf("Enter the operations as A+B-C+D or 1+2-3+4 [Without using spaces][Without changing order of order]\n");
+    scanf("%s",ch);
+    while(getchar()!='\n');
+    for(int i=0;i<(n-1);i++){
+        if(ch[2*i+1]!='+' && ch[2*i+1]!='-'){
+            printf("\nInvalid operation\n");
+            return;
+        }
+    }
+    //Operation started
+    for(int i=0;i<n;i++){
+        for(int j=0;j<r;j++){
+            for(int k=0;k<c;k++){
+                int p;
+                if(i==0) p=1;
+                else{
+                    p= ch[2*i-1]=='+'?1:-1;
+                }
+                Ans_matrix[j][k]=Ans_matrix[j][k]+ p*matrix[i][j][k];
+            }
+        }
+    }
+    printf("Matrix after operations\n");
+    Matrix_display(r,c,Ans_matrix);
 }
