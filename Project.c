@@ -66,10 +66,10 @@ int main(){
     case 2:
       switch(m){
         case 1:
-          //Complex();
+          Complex();
           break;
         case 2:
-          //Complex_explain();
+          Complex_explain();
           break;
         //No default needed covered earlier.
       }
