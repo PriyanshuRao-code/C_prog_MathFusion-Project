@@ -1,6 +1,53 @@
 #include <stdio.h>
 #include <math.h>
+#include <string.h>
+#include <stdlib.h>
+#define max 50
+//Simpler version for this program is commented below
 void Arithmetic();
+void Arithmetic_explain(){
+    printf("You can use the following functions:\n");
+    printf("+-*/^ with the format as:\n");
+    printf("a+b-c*d/e^f...\n");
+    printf("NOTE: The program will calculate from left to right without taking care of BODMAS\n\n");
+    Arithmetic();
+}
+void Arithmetic(){
+    char str[max];
+    printf("Enter the operation:\n");
+    scanf("%s",str);
+    while(getchar()!='\n');
+    float result = atoi(&str[0]);
+    int i=1;
+    while(i<strlen(str)){
+        switch(str[i]){
+            case '+':
+                result+=atoi(&str[i+1]);
+                break;
+            case '-':
+                result-=atoi(&str[i+1]);
+                break;
+            case '*':
+                result*=atoi(&str[i+1]);
+                break;
+            case '/':
+                result/=atoi(&str[i+1]);
+                break;
+            case '^':
+                result=pow(result,atoi(&str[i+1]));
+                break;
+            default:
+                printf("Problem in operators\n");
+                printf("Check the explanation\n\n");
+                Arithmetic_explain();
+                return;
+                break;
+        }
+        i+=2;
+    }
+    printf("The result of the operation: %f",result);
+}
+/*
 void Arithmetic_explain(){
     printf("Here are the functions allowed here and the format is as:\n");
     printf("Addition: a+b\n");
@@ -47,4 +94,4 @@ void Arithmetic(){
             Arithmetic_explain();
             break;
     }
-}
+}*/
