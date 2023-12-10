@@ -4,7 +4,6 @@ typedef struct{
     float real;
     float img;
 }complex;
-//typedef complex complex;
 
 void Complex();
 complex input();
