@@ -68,8 +68,8 @@ void Matrix_init(int r,int c,int matrix[][c]){
         }
     }
 }
-void Matrix_input(int r,int c,int matrix[][c]){
-        printf("Enter the matrix \n");
+void Matrix_input(int r,int c,int matrix[][c],int n){
+        printf("Enter the matrix %d\n",n);
         for(int i=0;i<r;i++){
             for(int j=0;j<c;j++){
                 scanf("%d",&matrix[i][j]);
@@ -78,7 +78,7 @@ void Matrix_input(int r,int c,int matrix[][c]){
 }
 void Matrix_input3(int n,int r,int c,int matrix[][r][c]){
     for(int i=0;i<n;i++){
-        printf("Enter the matrix \n");
+        printf("Enter the matrix %d\n",i+1);
         for(int j=0;j<r;j++){
             for(int k=0;k<c;k++){
                 scanf("%d",&matrix[i][j][k]);
@@ -160,8 +160,8 @@ void Multiplication(){
     }
     int matrix1[r1][c1];
     int matrix2[r2][c2];
-    Matrix_input(r1,c1,matrix1);
-    Matrix_input(r2,c2,matrix2);
+    Matrix_input(r1,c1,matrix1,1);
+    Matrix_input(r2,c2,matrix2,2);
     int matrix[r1][c2];
     Matrix_init(r1,c2,matrix);
 
@@ -282,7 +282,7 @@ void Transpose(){
     printf("Enter the number of rows and columns for calculating transpose matrix: ");
     scanf("%d %d",&r,&c);
     int matrix[r][c];
-    Matrix_input(r,c,matrix);
+    Matrix_input(r,c,matrix,1);
 
     //Transpose
     int transposee[c][r];
