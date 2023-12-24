@@ -16,36 +16,35 @@ void c_mag();
 
 void Complex_explain(){
     printf("\n\nNOTE: Enter the input in a+bi or a-bi format only\n");
-    printf("Enter a: addition\n");
-    printf("Enter s: subtraction\n");
-    printf("Enter m: multiplication\n");
-    printf("Enter d: division\n");
-    printf("Enter c: conjugate\n");
-    printf("Enter |: magnitude\n\n");
+    printf("Enter 1: addition\n");
+    printf("Enter 2: subtraction\n");
+    printf("Enter 3: multiplication\n");
+    printf("Enter 4: division\n");
+    printf("Enter 5: conjugate\n");
+    printf("Enter 6: magnitude\n\n");
     Complex();
 }
 void Complex(){
-    char a;
+    int a;
     printf("Enter the operation to be performed\n");
-    scanf(" %c",&a);
-    while(getchar()!='\n');
+    scanf("%d",&a);
     switch(a){
-        case 'a':
+        case 1:
             c_add();
             break;
-        case 's':
+        case 2:
             c_sub();
             break;
-        case 'm':
+        case 3:
             c_mul();
             break;
-        case 'd':
+        case 4:
             c_div();
             break;
-        case 'c':
+        case 5:
             c_con();
             break;
-        case '|':
+        case 6:
             c_mag();
             break;
         default:

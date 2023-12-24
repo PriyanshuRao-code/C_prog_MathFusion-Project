@@ -19,41 +19,40 @@ void Transpose();
 
 void Matrix_explain(){
     printf("Here are the functions allowed here and the format is as:\n");
-    printf("Addition: +\n");
-    printf("Subtraction: -\n");
-    printf("Add_Sub as A+B-C-D.. : #\n");
-    printf("Multiplication: *\n");
-    printf("Determinant: |\n");
-    printf("Inverse: ~\n");
-    printf("Transpose: !\n");
+    printf("Addition: 1\n");
+    printf("Subtraction: 2\n");
+    printf("Add_Sub as A+B-C-D.. : 3\n");
+    printf("Multiplication: 4\n");
+    printf("Determinant: 5\n");
+    printf("Inverse: 6\n");
+    printf("Transpose: 7\n");
     Matrix();
 }
 void Matrix(){
-    char c;
+    int c;
     printf("Enter the operator:\n");
-    scanf(" %c",&c);
-    while(getchar()!='\n');
+    scanf("%d",&c);
     switch(c){
-        case '+':
+        case 1:
             Addition();
             break;
-        case '-':
+        case 2:
             Subtraction();
             break;
-        case '*':
+        case 3:
+            Add_Sub();
+            break;
+        case 4:
             Multiplication();
             break;
-        case '|':
+        case 5:
             Determinant();
             break;
-        case '~':
+        case 6:
             Inverse();
             break;
-        case '!':
+        case 7:
             Transpose();
-            break;
-        case '#':
-            Add_Sub();
             break;
         default:
             printf("\nPlease refer to the functions:\n");
