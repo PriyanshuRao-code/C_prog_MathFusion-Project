@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <math.h>
-//Matrix me bhi 1st 2nd ka set karna hai jaise (&p1,1);
 typedef struct{
     float x;
     float y;
