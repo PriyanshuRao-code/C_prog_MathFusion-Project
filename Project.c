@@ -90,10 +90,10 @@ int main(){
     case 4:
       switch(m){
         case 1:
-          //Co_ordination();
+          Co_ordination();
           break;
         case 2:
-          //Co_ordination_explain();
+          Co_ordination_explain();
           break;
         //No default needed covered earlier.
       }
