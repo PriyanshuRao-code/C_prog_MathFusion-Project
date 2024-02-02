@@ -9,14 +9,14 @@ It deals with finding addition, subtraction, multiplication, division and taking
 
 # Co_ordination.h
 It deals with finding - 
-Distance
-Area of triangle(using co-ordinates of triangle)
-Area of quadrilateral(using co-ordinates of quadrilateral)
-Midpoint between two points
-Slope of line
-Checking collinearity
-Distance of a point from line
-Finding equation of line(from 2 points)
+Distance,
+Area of triangle(using co-ordinates of triangle),
+Area of quadrilateral(using co-ordinates of quadrilateral),
+Midpoint between two points,
+Slope of line,
+Checking collinearity,
+Distance of a point from line,
+Finding equation of line(from 2 points),
 Checking for parallel lines
 
 # Complex.h
